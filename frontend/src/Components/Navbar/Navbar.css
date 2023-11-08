@@ -1,0 +1,147 @@
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  box-shadow: 0 1px 3px -2px black;
+}
+.nav-offer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(203, 203, 195);
+  color: rgb(161, 62, 62);
+  font-weight: 500;
+  font-size: 8px;
+  width: 100%;
+  height: 4vh;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+}
+.nav-logo img {
+  width: 4rem;
+  height: 4rem;
+}
+.nav-logo p {
+  font-size: 20px;
+  font-weight: 500;
+}
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+
+  font-size: 18px;
+  font-weight: 500;
+  gap: 40px;
+}
+
+.nav-menu li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.nav-menu hr {
+  background-color: crimson;
+  border: none;
+  width: 80%;
+  height: 2px;
+  border-radius: 10px;
+}
+.nav-login-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 45px;
+  position: relative;
+}
+.cart-icon-count {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-login-cart button {
+  padding: 10px;
+  outline: none;
+  border: 1px solid black;
+  background-color: white;
+  width: 70px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10%;
+  cursor: pointer;
+}
+.nav-login-cart button:active {
+  background-color: aliceblue;
+}
+.nav-login-cart img {
+  width: 30px;
+}
+.nav-cart-count {
+  color: white;
+  display: flex;
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border-radius: 30px;
+  right: 0;
+  font-size: 13px;
+  margin-right: -15px;
+  margin-top: -20px;
+}
+.mobile-menu {
+  display: none;
+}
+.moblie-navbar-profilename {
+  display: none;
+}
+@media screen and (max-width: 700px) {
+  .navbar {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    display: block;
+    border-bottom: 1px solid rgb(194, 188, 188);
+    padding: 20px;
+  }
+  .nav-logo {
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    justify-content: none;
+    align-items: normal;
+  }
+  .nav-menu li {
+    align-items: normal;
+  }
+
+  .nav-cart-count {
+    width: 18px;
+    height: 18px;
+    right: 0;
+  }
+  .mobile-menu {
+    display: block;
+    box-shadow: 0 1px 3px -2px black;
+  }
+  .nav-login-cart p {
+    display: none;
+  }
+  .moblie-navbar-profilename {
+    display: block;
+  }
+}
