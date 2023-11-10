@@ -23,7 +23,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "/api/users/login",
+        "https://e-commerce-one-fawn.vercel.app/api/users/login",
         {
           email,
           password,
