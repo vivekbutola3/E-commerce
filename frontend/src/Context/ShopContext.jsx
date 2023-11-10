@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import all_product from "../Components/Assests/all_product";
 import { UserState } from "../Context/userContext";
 import axios from "axios";
@@ -11,9 +11,18 @@ const getDefaultCart = () => {
   }
   return cart;
 };
+const getDefaultWishlist = () => {
+  let wish = {};
+  for (let index = 0; index < all_product.length + 1; index++) {
+    wish[index] = 0;
+  }
+  return wish;
+};
 const ShopContextProvider = (props) => {
   const { user } = UserState();
+  const [wishlistItems, setWishlistItems] = useState(getDefaultWishlist());
   const [cartItems, setCartItems] = useState(getDefaultCart());
+  const [cartData, setCartData] = useState();
 
   const addToCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
@@ -35,12 +44,10 @@ const ShopContextProvider = (props) => {
           "/api/cart",
           {
             userId: user._id,
-            items: {
-              title: addedItem.name,
-              price: addedItem.new_price,
-              quantity: 1,
-              Total: addedItem.new_price * 1,
-            },
+            title: addedItem.name,
+            price: addedItem.new_price,
+            quantity: 1,
+            Total: addedItem.new_price * 1,
           },
           config
         );
@@ -50,10 +57,30 @@ const ShopContextProvider = (props) => {
       }
     }
   };
+  const removeFromCart = async (itemId) => {
+    // setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
 
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    try {
+      const response = await axios.delete(`/api/cart/${itemId}`);
+      console.log(response.data.message); // Log the server response message
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
+  useEffect(() => {
+    async function fetchCartData() {
+      try {
+        const response = await axios.get(`/api/cart/${user._id}`);
+        const cartItems = response.data;
+        setCartData(cartItems);
+        console.log("Cart Items:", cartItems);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    }
+    fetchCartData();
+  }, [user, addToCart, removeFromCart]);
+
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -82,9 +109,19 @@ const ShopContextProvider = (props) => {
     }
     return totalItems;
   };
+  const addToWishlist = (itemId) => {
+    setWishlistItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+  };
+  const removeFromWishlist = (itemId) => {
+    setWishlistItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+  };
   const contextValue = {
     all_product,
     cartItems,
+    wishlistItems,
+    cartData,
+    addToWishlist,
+    removeFromWishlist,
     addToCart,
     removeFromCart,
     getTotalCartAmount,

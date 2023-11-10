@@ -8,7 +8,7 @@
   margin: auto;
   padding: 0px 140px;
   margin-bottom: 150px;
-  background: linear-gradient(180deg, #fde1ff 0%, #e1ffea22 60%);
+  background: linear-gradient(180deg, #f5a04b, #e1ffea22 60%);
   gap: 10vh;
 }
 .newsletter h1 {
@@ -23,7 +23,6 @@
 .EmailNewsLetter {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background: white;
   width: 730px;
   height: 70px;
@@ -60,14 +59,29 @@
   .newsletter p {
     font-size: 10px;
   }
-  .newsletter div {
+  /* .newsletter div {
     width: 330px;
     height: 50px;
   }
-
   .newsletter div button {
     height: 50px;
-
+    font-size: 12px;
+  } */
+  .EmailNewsLetter {
+    display: flex;
+    align-items: center;
+    background: white;
+    width: 330px;
+    height: 60px;
+    border-radius: 80px;
+    border: 1px solid #e3e3e3;
+  }
+  .EmailNewsLetter input {
+    width: 200px;
+  }
+  .EmailNewsLetter button {
+    width: 110px;
+    border: none;
     font-size: 12px;
   }
 }

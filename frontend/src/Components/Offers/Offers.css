@@ -5,7 +5,7 @@
   display: flex;
   padding: 0px 140px;
   margin-bottom: 150px;
-  background: linear-gradient(180deg, #fde1ff 0%, #e1ffea22 60%);
+  background: linear-gradient(180deg, #f5a04b, #e1ffea22 60%);
 }
 .offers-left {
   flex: 1;
@@ -44,12 +44,11 @@
 }
 @media screen and (max-width: 800px) {
   .offers {
-    width: 52%;
+    width: 40%;
     height: 40vh;
     display: flex;
     padding: 0px 100px;
-    background: linear-gradient(180deg, #fde1ff 0%, #e1ffea22 60%);
-    margin-top: 155vh;
+
     margin-bottom: 10px;
   }
   .offers-left h1 {

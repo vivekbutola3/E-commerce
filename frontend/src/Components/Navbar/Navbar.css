@@ -70,12 +70,13 @@
 .nav-login-cart button {
   padding: 10px;
   outline: none;
-  border: 1px solid black;
+  border: 2px solid black;
   background-color: white;
+  box-shadow: 75deg bisque;
   width: 70px;
   font-size: 15px;
   font-weight: 500;
-  border-radius: 10%;
+  border-radius: 0;
   cursor: pointer;
 }
 .nav-login-cart button:active {
@@ -99,11 +100,59 @@
   margin-right: -15px;
   margin-top: -20px;
 }
+.nav-searchbar {
+  width: 30rem;
+  height: 5vh;
+  font-size: 20px;
+  background-color: #eaeaea;
+  padding: 12px;
+  border: 1px solid white;
+}
+.navlogin-dropmenu {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  color: gray;
+  width: 300px;
+  border-radius: 2%;
+  padding: 20px;
+  top: 5rem;
+  right: 1.5rem;
+  position: absolute;
+}
+.navlogin-dropmenu div {
+  padding: 5px;
+}
+.navlogin-dropmenu div h4 {
+  padding: 5px;
+  cursor: pointer;
+}
+.navlogin-dropmenu div h4:hover {
+  background: rgb(248, 245, 245);
+}
 .mobile-menu {
   display: none;
 }
 .moblie-navbar-profilename {
   display: none;
+}
+
+.search-results ul {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  margin-left: -2.4rem;
+}
+.search-results ul li {
+  width: 28.6rem;
+  border-bottom: 1px solid rgb(85, 82, 82);
+  background-color: #efecec;
+  height: 30px;
+  padding: 10px;
+}
+.search-results ul li:hover {
+  background-color: rgb(225, 227, 230);
 }
 @media screen and (max-width: 700px) {
   .navbar {
@@ -115,20 +164,16 @@
     border-bottom: 1px solid rgb(194, 188, 188);
     padding: 20px;
   }
-  .nav-logo {
-    align-items: center;
-    margin-bottom: 30px;
+  .nav-logo img {
+    display: "none";
   }
 
-  .nav-menu {
-    flex-direction: column;
-    justify-content: none;
-    align-items: normal;
-  }
   .nav-menu li {
     align-items: normal;
   }
-
+  .nav-searchbar {
+    width: 18rem;
+  }
   .nav-cart-count {
     width: 18px;
     height: 18px;
@@ -143,5 +188,26 @@
   }
   .moblie-navbar-profilename {
     display: block;
+  }
+  .navlogin-dropmenu {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: gray;
+    width: 200px;
+    border-radius: 2%;
+    padding: 20px;
+    top: 5rem;
+    right: 40px;
+    position: absolute;
+  }
+  .search-results ul li {
+    width: 100%;
+    border-bottom: 1px solid rgb(85, 82, 82);
+    background-color: #efecec;
+    height: 30px;
+    padding: 10px;
+    font-size: x-small;
   }
 }

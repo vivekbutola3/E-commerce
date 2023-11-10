@@ -12,6 +12,7 @@ import men_banner from "./Components/Assests/banner_mens.png";
 import women_banner from "./Components/Assests/banner_women.png";
 import kid_banner from "./Components/Assests/banner_kids.png";
 import Login from "./Pages/Login";
+import Wishlist from "./Pages/Wishlist";
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/register" element={<LoginSignup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/wishlist" element={<Wishlist />}>
+          <Route path=":Id" element={<Wishlist />} />
+        </Route>
       </Routes>
       <Footer />
     </>

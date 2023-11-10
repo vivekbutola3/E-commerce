@@ -27,4 +27,9 @@
   .popular {
     height: 280vh;
   }
+  .popular h1 {
+    color: #171717;
+    font-size: 30px;
+    font-weight: 600;
+  }
 }

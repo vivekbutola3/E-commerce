@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ProductDisplay.css";
 import Item from "../Item/Item";
 import star_icon from "../Assests/star_icon.png";
@@ -9,6 +9,7 @@ import { UserState } from "../../Context/userContext";
 const ProductDisplay = (props) => {
   const { addToCart } = useContext(ShopContext);
   const { user } = UserState();
+
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
@@ -63,6 +64,7 @@ const ProductDisplay = (props) => {
           <button
             onClick={() => {
               addToCart(props.product.id);
+              window.dispatchEvent(new Event("cartChange"));
             }}
           >
             ADD TO CART

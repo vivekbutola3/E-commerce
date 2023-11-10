@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
-
+const bcrypt = require("bcryptjs");
 //@description     Get or Search all users
 //@route           GET /api/user?search=
 //@access          Public
@@ -65,12 +65,11 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (user && (await user.matchPassword(password))) {
+  if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
-
       token: generateToken(user._id),
     });
   } else {

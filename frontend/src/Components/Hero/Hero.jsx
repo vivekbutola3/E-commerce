@@ -3,6 +3,7 @@ import "./Hero.css";
 import hand_icon from "../Assests/hand_icon.png";
 import arrow_icon from "../Assests/arrow.png";
 import hero_imar from "../Assests/hero_image.png";
+import hero_imar1 from "../Assests/hero_image1.png";
 import { useNavigate } from "react-router-dom";
 import women_image from "../Assests/product_1.png";
 import men_image from "../Assests/product_20.png";
@@ -10,6 +11,11 @@ import kid_image from "../Assests/product_30.png";
 import image from "../Assests/product_25.png";
 
 const Category = [
+  {
+    name: "Trending",
+    pic: kid_image,
+    link: "#popular",
+  },
   {
     name: "Shop",
     pic: image,
@@ -67,14 +73,7 @@ const Hero = () => {
               <img
                 src={item.pic}
                 alt="categoryimage"
-                style={{
-                  width: "120px",
-                  height: "120px",
-                  border: "4px solid orange",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  // opacity: "30%",
-                }}
+                className="image-container"
                 onClick={() => {
                   navigate(item.link);
                 }}
@@ -86,14 +85,13 @@ const Hero = () => {
       </div>
       <div className="hero">
         <div className="hero-left">
-          <h2>NEW ARRIVALS ONLY</h2>
+          <h2>NEW SEASON COLLECTIONS</h2>
           <div>
             <div className="hero-hand-icon">
               <p>New</p>
-              <img src={hand_icon} alt="hand_icon" />
             </div>
-            <p>Collections</p>
-            <p>for everyone</p>
+            <p>Winter Collections</p>
+            <p>Available</p>
           </div>
           <div className="hero-latest-btn">
             <div>Latest Collections</div>
@@ -101,7 +99,7 @@ const Hero = () => {
           </div>
         </div>
         <div className="hero-right">
-          <img src={hero_imar} alt="hero_image" />
+          <img src={hero_imar1} alt="hero_image" />
         </div>
       </div>
     </>

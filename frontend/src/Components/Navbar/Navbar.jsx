@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import SHOPEC from "../Assests/SHOPEC.png";
 import cart_icon from "../Assests/cart_icon.png";
@@ -6,18 +6,67 @@ import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
 import { UserState } from "../../Context/userContext";
 import { BiMenu } from "react-icons/bi";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
-const Navbar = () => {
-  const [menuActive, setMenuActive] = useState("shop");
-  const { getTotalCartItems } = useContext(ShopContext);
-  const { user, logout } = UserState();
-  const [displayNavbar, setDisplayNavbar] = useState("flex");
-  const history = useNavigate();
+import { GrFormNextLink } from "react-icons/gr";
+import { AiOutlineHeart } from "react-icons/ai";
 
+const Navbar = () => {
+  // const [menuActive, setMenuActive] = useState("shop");
+  const { cartData, all_product, addToCart } = useContext(ShopContext);
+  const { user, logout } = UserState();
+  const isLoggedIn = !!user;
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [displayNavbar, setDisplayNavbar] = useState("flex");
+  const [displayMenu, setDisplayMenu] = useState("none");
+  const [cartCount, setCartCount] = useState(0);
+  const navigate = useNavigate();
+  const handleSearch = () => {
+    // Map the initial products if needed
+    const mappedProducts = all_product.map((product) => ({
+      id: product.id, // Adjust this based on your data structure
+      title: product.name, // Adjust this based on your data structure
+      category: product.category, // Adjust this based on your data structure
+      // Other properties...
+    }));
+
+    // Filter products based on searchQuery
+    const filteredProducts = mappedProducts.filter((product) => {
+      const titleMatch =
+        product.title &&
+        product.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const categoryMatch =
+        product.category &&
+        product.category.toLowerCase().includes(searchQuery.toLowerCase());
+      return titleMatch || categoryMatch;
+    });
+
+    // Update the searchResults state with the filtered products only if there is a search query
+    setSearchResults(
+      searchQuery.trim() !== "" ? filteredProducts.slice(0, 5) : []
+    );
+  };
+
+  useEffect(() => {
+    // Call handleSearch whenever searchQuery changes
+    handleSearch();
+  }, [searchQuery, all_product]);
+  // useEffect to update cart count when cartData changes
+  useEffect(() => {
+    // Update the cart count in the navbar whenever cartData changes
+    const updatedCartCount = Array.isArray(cartData) ? cartData.length : 0;
+    setCartCount(updatedCartCount);
+  }, [cartData, addToCart]);
   const handleMenuClick = () => {
     setDisplayNavbar(!displayNavbar);
   };
+  const handleMenuDrop = () => {
+    setDisplayMenu(!displayMenu);
+  };
+
+  console.log(searchResults);
   return (
     <>
       <div className="nav-offer">
@@ -32,7 +81,16 @@ const Navbar = () => {
           }}
         >
           <div className="nav-logo">
-            <img src={SHOPEC} alt="logo" />
+            <img
+              src={SHOPEC}
+              alt="logo"
+              onClick={() => {
+                navigate("/");
+              }}
+              style={{
+                cursor: "pointer",
+              }}
+            />
             <p>SHOPECM</p>
           </div>
           <div
@@ -72,43 +130,101 @@ const Navbar = () => {
         }}
       >
         <div className="nav-logo">
-          <img src={SHOPEC} alt="logo" />
+          <img
+            src={SHOPEC}
+            alt="logo"
+            onClick={() => {
+              navigate("/");
+            }}
+            style={{
+              cursor: "pointer",
+            }}
+          />
           <p>SHOPECM</p>
         </div>
 
         <ul className="nav-menu">
           <li>
-            {user ? (
-              <p
-                style={{
-                  fontSize: "20px",
-                  fontWeight: 500,
-                }}
-                className="moblie-navbar-profilename"
-              >
-                Hi, {user.name}
-              </p>
-            ) : (
-              <></>
-            )}
-          </li>
-          <li>
-            <input
-              type="search"
-              placeholder="Search for products"
+            <div
               style={{
-                width: "30rem",
-                height: "5vh",
-                fontSize: "20px",
-                background: "wheat",
-
-                padding: "12px",
-                border: "1px solid white",
-
-                outline: "none",
+                display: "flex",
+                flexDirection: "column",
               }}
-            />
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {" "}
+                <input
+                  type="search"
+                  className="nav-searchbar"
+                  placeholder="Search for products"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button
+                  style={{
+                    width: "70px",
+                    height: "4.8vh",
+                    fontSize: "16px",
+                    background: "black",
+                    color: "white",
+                    cursor: "pointer",
+                    border: "none",
+                  }}
+                >
+                  <AiOutlineSearch
+                    style={{
+                      fontSize: "20px",
+                    }}
+                  />
+                </button>
+              </div>
+
+              {searchResults.length > 0 && (
+                <div className="search-results">
+                  <ul>
+                    {searchResults.map((result) => (
+                      <>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: "20px",
+                            position: "relative",
+                          }}
+                        >
+                          {" "}
+                          <AiOutlineSearch
+                            style={{
+                              fontSize: "20px",
+                              position: "absolute",
+                              left: "8px",
+                            }}
+                          />
+                          <Link
+                            to={`/product/${result.id}`}
+                            style={{
+                              textDecoration: "none",
+                              color: "black",
+                            }}
+                          >
+                            <li key={result.id}>{result.title}</li>
+                          </Link>
+                        </div>
+                      </>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </li>
+
           {/* <li
             onClick={() => {
               setMenuActive("shop");
@@ -160,34 +276,108 @@ const Navbar = () => {
           </li> */}
         </ul>
         <div className="nav-login-cart">
+          <AiOutlineHeart
+            style={{
+              fontSize: "40px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              navigate("/wishlist");
+            }}
+          />
+
+          <BiUserCircle
+            style={{
+              fontSize: "40px",
+              cursor: "pointer",
+            }}
+            onClick={handleMenuDrop}
+          />
+          <div
+            className="navlogin-dropmenu"
+            style={{
+              display: displayMenu ? "none" : "flex",
+            }}
+          >
+            {user ? (
+              <div
+                className=""
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  alignItems: "center",
+                  borderBottom: "none",
+                }}
+              >
+                <img
+                  src="https://www.pngarts.com/files/10/Default-Profile-Picture-Transparent-Image-337x279.png"
+                  alt="profile"
+                  style={{
+                    width: "80px",
+                  }}
+                />
+                <p
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: 500,
+                  }}
+                >
+                  Hi, {user.name}
+                </p>
+              </div>
+            ) : (
+              <Link to="/login">
+                {" "}
+                <button
+                  onClick={logout}
+                  style={{
+                    width: "100%",
+                    background: "black",
+                    color: "white",
+                    border: "none",
+                    outline: "none",
+                    borderRadius: "0",
+                  }}
+                >
+                  Login
+                </button>
+              </Link>
+            )}
+
+            <div>
+              <h4>BECOME SELLER</h4>
+            </div>
+            <div>
+              <h4>ORDERS</h4>
+            </div>
+            <div>
+              <h4>WISHLISTS</h4>
+            </div>
+            <div>
+              {user ? (
+                <h4>
+                  <button
+                    onClick={logout}
+                    style={{
+                      width: "100%",
+                      background: "red",
+                      color: "white",
+                      border: "none",
+                      outline: "none",
+                      borderRadius: "0",
+                    }}
+                  >
+                    Logout
+                  </button>
+                </h4>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
           {user ? (
-            <>
-              <BiUserCircle
-                style={{
-                  fontSize: "40px",
-                }}
-              />
-              {/* <p
-                style={{
-                  fontSize: "20px",
-                  fontWeight: 500,
-                }}
-              >
-                Hi, {user.name}
-              </p> */}
-              <button
-                onClick={logout}
-                style={{
-                  background: "red",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "none",
-                  outline: "none",
-                }}
-              >
-                Logout
-              </button>
-            </>
+            <></>
           ) : (
             // If user is not logged in, display the login button
             <Link to="/register">
@@ -196,10 +386,25 @@ const Navbar = () => {
           )}
           <div className="cart-icon-count">
             {" "}
-            <Link to={"/cart"}>
-              <img src={cart_icon} alt="cart_icon" />
-            </Link>
-            <div className="nav-cart-count">{getTotalCartItems()}</div>
+            {isLoggedIn ? (
+              // If user is logged in, display the cart link
+              <Link to={"/cart"}>
+                <img src={cart_icon} alt="cart_icon" />
+              </Link>
+            ) : (
+              // If user is not logged in, display a message to log in
+              <div
+                onClick={() => {
+                  navigate("/login");
+                  alert("You must login First.");
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                {" "}
+                <img src={cart_icon} alt="cart_icon" />
+              </div>
+            )}
+            <div className="nav-cart-count">{cartCount}</div>
           </div>
         </div>
       </div>
