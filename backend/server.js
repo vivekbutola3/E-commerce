@@ -19,7 +19,3 @@ app.use(
 app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/cart", cartRoutes);
-
-const PORT = process.env.PORT;
-
-app.listen(PORT, console.log(`Server running on PORT ${PORT}...`));

@@ -41,7 +41,7 @@ const ShopContextProvider = (props) => {
 
         // Make an API POST request to add the item to the user's cart on the backend
         await axios.post(
-          "/api/cart",
+          "https://e-commerce-one-fawn.vercel.app/api/cart",
           {
             userId: user._id,
             title: addedItem.name,
@@ -61,7 +61,9 @@ const ShopContextProvider = (props) => {
     // setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
 
     try {
-      const response = await axios.delete(`/api/cart/${itemId}`);
+      const response = await axios.delete(
+        `https://e-commerce-one-fawn.vercel.app/api/cart/${itemId}`
+      );
       console.log(response.data.message); // Log the server response message
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -70,7 +72,9 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     async function fetchCartData() {
       try {
-        const response = await axios.get(`/api/cart/${user._id}`);
+        const response = await axios.get(
+          `https://e-commerce-one-fawn.vercel.app/api/cart/${user._id}`
+        );
         const cartItems = response.data;
         setCartData(cartItems);
         console.log("Cart Items:", cartItems);
