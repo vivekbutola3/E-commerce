@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://e-commerce-sigma-jet.vercel.app"],
+    origin: ["https://e-commerce-lzc5.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true,
   })
