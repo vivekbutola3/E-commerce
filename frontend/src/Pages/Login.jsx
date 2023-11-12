@@ -23,7 +23,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "/api/users/login",
+        "https://e-commerce-xi-dusky.vercel.app/api/users/login",
         {
           email,
           password,
