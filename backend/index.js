@@ -17,5 +17,5 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/api/users", userRoutes);
-app.use("/api/cart", cartRoutes);
+app.use("https://e-commerce-lzc5.vercel.app/api/users", userRoutes);
+app.use("https://e-commerce-lzc5.vercel.app/api/cart", cartRoutes);
