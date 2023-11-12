@@ -23,7 +23,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "https://e-commerce-i73s8i1qp-vivekbutola3.vercel.app/api/users/login",
+        "https://e-commerce-xi-dusky.vercel.app/api/users/login",
         {
           email,
           password,
