@@ -10,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
   const handleSubmit = async () => {
     if (!email || !password) {
       alert("Please fill all the details!");
