@@ -19,7 +19,7 @@ const Login = () => {
     try {
       const config = {
         headers: {
-          "Content-type": "application/json",
+          "Content-type": "application/json, text/plain, */*",
         },
       };
 
