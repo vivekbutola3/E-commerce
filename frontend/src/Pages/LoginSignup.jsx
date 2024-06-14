@@ -29,6 +29,7 @@ const LoginSignup = () => {
         headers: {
           "Content-type": "application/json",
         },
+        withCredentials: true,
       };
 
       const { data } = await axios.post(
