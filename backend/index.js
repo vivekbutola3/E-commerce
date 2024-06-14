@@ -1,24 +1,46 @@
 const express = require("express");
 const connectDB = require("./config/db");
-const dotenv = require("dotenv");
+require("dotenv").config();
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const PORT = process.env.PORT;
 
-dotenv.config();
-connectDB();
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://e-commerce-lzc5.vercel.app",
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
 const app = express();
-
-app.options("*", cors()); // Handle preflight requests
-
-app.use(
-  cors({
-    origin: ["https://e-commerce-lzc5.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true,
-  })
-);
-
 app.use(express.json());
+app.use(cors(corsOptions));
+
+app.get("/", (req, res) => {
+  console.log("GET /");
+  res.status(200).send({ message: "Hello, API is working", status: true });
+});
+app.listen(PORT, async () => {
+  try {
+    await connectDb();
+    console.log(`API is working on port: ${PORT}`);
+  } catch (error) {
+    console.error("Failed to connect to the database:", error);
+  }
+});
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 app.use("/api/users", userRoutes);
 app.use("/api/cart", cartRoutes);
