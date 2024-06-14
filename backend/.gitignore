@@ -1,1 +1,26 @@
-.vercel
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# IDE or editor specific files
+.vscode/
+*.code-workspace
+
+# Logs and debugging files
+logs/
+*.log
+
+# Output of build tools
+/build/
+
+# Ignore npm debug log
+npm-debug.log*
+
+# Ignore yarn integrity file
+.yarn-integrity
+
+# OS generated files
+.DS_Store
+Thumbs.db

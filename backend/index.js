@@ -8,7 +8,7 @@ const PORT = process.env.PORT;
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://e-commerce-lzc5.vercel.app", // Removed trailing slash
+  "https://e-commerce-lzc5.vercel.app",
 ];
 
 const corsOptions = {
@@ -29,17 +29,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
-  console.log("GET /");
   res.status(200).send({ message: "Hello, API is working", status: true });
-});
-
-app.listen(PORT, async () => {
-  try {
-    await connectDB();
-    console.log(`API is working on port: ${PORT}`);
-  } catch (error) {
-    console.error("Failed to connect to the database:", error);
-  }
 });
 
 app.use((req, res, next) => {
@@ -49,3 +39,12 @@ app.use((req, res, next) => {
 
 app.use("/api/users", userRoutes);
 app.use("/api/cart", cartRoutes);
+
+app.listen(PORT, async () => {
+  try {
+    await connectDB();
+    console.log(`API is working on port: ${PORT}`);
+  } catch (error) {
+    console.error("Failed to connect to the database:", error);
+  }
+});
