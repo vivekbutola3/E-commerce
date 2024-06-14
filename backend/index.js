@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 });
 app.listen(PORT, async () => {
   try {
-    await connectDb();
+    await connectDB();
     console.log(`API is working on port: ${PORT}`);
   } catch (error) {
     console.error("Failed to connect to the database:", error);
