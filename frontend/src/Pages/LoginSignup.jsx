@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./CSS/LoginSignup.css";
 import { Link } from "react-router-dom";
-
+axios.defaults.withCredentials = true;
 const LoginSignup = () => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
@@ -29,7 +29,6 @@ const LoginSignup = () => {
         headers: {
           "Content-type": "application/json",
         },
-        withCredentials: true,
       };
 
       const { data } = await axios.post(
